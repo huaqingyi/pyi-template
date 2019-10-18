@@ -11,7 +11,7 @@ export class GulpFile {
         dest: join(__dirname, 'app')
     })
     public async build(tsc: TSC) {
-        await new Promise(r => remove(join(__dirname, 'app'), r));
+        await new Promise((r) => remove(join(__dirname, 'app'), r));
         await tsc.runtime(join(__dirname, 'src/**/*.ts'), join(__dirname, 'app'));
     }
 
@@ -26,6 +26,6 @@ export class GulpFile {
             ],
             stdin: true,
             stdout: true
-        })
+        });
     }
 }
