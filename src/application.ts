@@ -11,7 +11,10 @@ export class Application extends PYIApplication implements PYIApplicationImpl {
 
     constructor() {
         super();
-        this.run(join(__dirname, '**/**.ts'));
+        this.run([
+            join(__dirname, '**/**.ts'),
+            join(__dirname, '**/**.js')
+        ]);
     }
 
     public async onInit() {
