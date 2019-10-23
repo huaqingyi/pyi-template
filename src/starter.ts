@@ -1,4 +1,6 @@
 import { Application } from './application';
 
 const app = new Application();
-app.starter();
+app.bootstrap(() => {
+    app.starter();
+});

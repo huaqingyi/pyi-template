@@ -14,6 +14,13 @@ let AppConfiguration = class AppConfiguration extends pyi_1.PYIAutoAppConfigurat
     constructor(props) {
         super();
         this.port = 4000;
+        this.jwt = {
+            secret: 'pyi test',
+            path: [
+                /^\/login/
+            ],
+            tokenKey: 'authorization'
+        };
     }
     async development() {
         this.port = 4001;

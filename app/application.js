@@ -36,7 +36,19 @@ let Application = class Application extends pyi_1.PYIApplication {
     }
     async didMakeConfig() {
         console.log('didMakeConfig ...');
-        pyi_swagger_1.Swagger.build('/swagger.io', this);
+        pyi_swagger_1.Swagger.build('/swagger.io', this, {
+            info: {
+                description: 'PYI Swagger 测试用例',
+                title: 'PYI Swagger 测试用例'
+            },
+            securityDefinitions: {
+                api_key: {
+                    type: 'apiKey',
+                    name: 'authorization',
+                    in: 'header'
+                }
+            }
+        });
     }
     async didRuntime() {
         console.log('didRuntime ...');
