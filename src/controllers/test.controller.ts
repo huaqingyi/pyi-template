@@ -11,6 +11,7 @@ import send from 'koa-send';
 import { join } from 'path';
 import { LoginValidation } from '../validation/login.validation';
 import { UserDto } from '../dto/user.info';
+import jwt from 'jsonwebtoken';
 
 const tag = tags(['TestController']);
 const userSchema = {
@@ -64,8 +65,7 @@ export class TestController extends PYIController {
                     nikename: 'test',
                     email: 'test@email.com'
                 };
-                const { secret, token } = this.tokenConfig;
-                response.append('token', this.token.sign(result, secret, token));
+                response.append('token', jwt.sign(result, 'pyi', { expiresIn: '24h' }));
                 return await result;
             }
         });
