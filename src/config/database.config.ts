@@ -1,9 +1,9 @@
-import { Configuration, PYIAutoConfiguration } from 'pyi';
+import { Configuration, PYIConfiguration } from 'pyi';
 import { SequelizeOptions } from 'sequelize-typescript';
-import { Dialect, ReplicationOptions, PoolOptions } from 'sequelize/types';
+import { ReplicationOptions, PoolOptions, Dialect } from 'sequelize/types';
 
 @Configuration
-export class DBConfiguration extends PYIAutoConfiguration implements SequelizeOptions {
+export class DataBaseConfiguration extends PYIConfiguration implements SequelizeOptions {
     public dialect: Dialect;
     public replication: ReplicationOptions;
     public pool: PoolOptions;

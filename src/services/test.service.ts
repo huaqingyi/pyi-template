@@ -1,22 +1,19 @@
-import { Service, PYIService, autowired } from 'pyi';
-import { DBComponent } from '../components/db.component';
-import { User } from '../models/user.model';
+import { Service, PYIService, autoconnect } from 'pyi';
+import { Database } from '../components/database';
+import { User } from '../models/user';
 
 @Service
 export class TestService extends PYIService {
 
-    @autowired
-    public db!: DBComponent;
+    @autoconnect
+    public db!: Database;
 
-    public async findAllUsers() {
-        return await this.db.table(User).findAll().then((row: any) => {
-            return row.map((resp: any) => resp.toJSON());
-        });
+    public findAll() {
+        return this.db.table(User).findAll({ raw: true });
     }
 
-    public async findUser() {
-        let data: any = {};
-        [data] = await this.db.instance().query(`SELECT * FROM test1`);
-        return data;
+    public async test() {
+        throw new Error('测试 Service Error ...');
+        return await { name: 'Hello World ...' };
     }
 }

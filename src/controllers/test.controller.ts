@@ -1,44 +1,43 @@
-import {
-    Controller, RequestMapping, RequestMappingMethod,
-    PYIController, autowired, PYIExecption, PYIThrows,
-    Res, QueryParams, Body, Ctx
+import { 
+    Controller, PYIController, RequestMapping, 
+    autoconnect, RequestMappingMethod, 
+    Body, PYIExecption, PYIThrows 
 } from 'pyi';
 import { TestService } from '../services/test.service';
-import { TestDto } from '../dto/test.dto';
-import { Response, Context } from 'koa';
-import { tags, request, summary, body, security } from 'pyi-swagger';
-import send from 'koa-send';
-import { join } from 'path';
-import { LoginValidation } from '../validation/login.validation';
-import { UserDto } from '../dto/user.info';
-import jwt from 'jsonwebtoken';
+import { LoginDao } from '../dao/test/login.dao';
+import { ResponseDto } from '../dto/response.dto';
+import { tags, request, summary, body } from 'pyi-swagger';
 
 const tag = tags(['TestController']);
-const userSchema = {
-    name: { type: 'string', required: true },
-    password: { type: 'string', required: true }
-};
 
 @Controller
 export class TestController extends PYIController {
 
-    @autowired
+    @autoconnect
     public service!: TestService;
 
     @RequestMapping({
-        prefix: '/resource/*'
+        prefix: '/test',
+        methods: [RequestMappingMethod.GET]
     })
-    public async resource(@Ctx() ctx: Context) {
-        this.dto = true;
-        return await send(ctx, ctx.path, { root: join(__dirname, '../') });
+    public async test() {
+        this.logger.error(1111);
+        console.log(111);
+        console.log(await this.service.findAll());
+        throw new Error('测试');
+        return 111;
     }
 
     @RequestMapping({
-        prefix: '/favicon.ico'
+        prefix: '/error'
     })
-    public async favicon(@Ctx() ctx: Context) {
-        this.dto = true;
-        return await send(ctx, ctx.path, { root: join(__dirname, '../resource/static') });
+    public error(): ResponseDto {
+        return PYIExecption(class extends PYIThrows<TestController> {
+            public async throws(this: TestController) {
+                console.log(await this.service.test());
+                return 'test ...';
+            }
+        });
     }
 
     @RequestMapping({
@@ -47,90 +46,15 @@ export class TestController extends PYIController {
     })
     @request(RequestMappingMethod.POST, '/login')
     @summary('login user auth jwt .')
-    @body(LoginValidation.swaggerDocument)
+    @body((LoginDao as any).swaggerDocument)
     @tag
     public login(
-        @Body({ validate: true }) loginForm: LoginValidation,
-        @Res() response: Response,
-        @Ctx() ctx: Context
-    ): UserDto {
-        return PYIExecption(class extends TestController implements PYIThrows {
-            public errno!: number;
-            public errmsg!: string;
-            public async throws() {
-                const result = {
-                    id: 1,
-                    username: 'test',
-                    age: '1',
-                    nikename: 'test',
-                    email: 'test@email.com'
-                };
-                response.append('token', jwt.sign(result, 'pyi', { expiresIn: '24h' }));
-                return await result;
+        @Body({ validate: true }) login: LoginDao
+    ): ResponseDto {
+        return PYIExecption(class extends PYIThrows<TestController> {
+            public async throws(this: TestController) {
+                return 'test ...';
             }
         });
-    }
-
-    @RequestMapping({
-        prefix: '/'
-    })
-    @request(RequestMappingMethod.GET, '/')
-    @summary('test get index')
-    @tag
-    public index(): TestDto {
-        return PYIExecption(class extends TestController implements PYIThrows {
-            public errno!: number;
-            public errmsg!: string;
-            public async throws() {
-                return await 'Hello PYI ...';
-            }
-        });
-    }
-
-    @RequestMapping({
-        prefix: '/error'
-    })
-    public err(): TestDto {
-        return PYIExecption(class extends TestController implements PYIThrows {
-            public errno!: number;
-            public errmsg!: string;
-            public async throws() {
-                this.errno = 1000;
-                this.errmsg = 'test error ...';
-                throw new Error('test error');
-                return await 'Hello PYI ...';
-            }
-        });
-    }
-
-    @RequestMapping({
-        prefix: '/info',
-        methods: [RequestMappingMethod.POST]
-    })
-    @request(RequestMappingMethod.POST, '/info')
-    @security([{ api_key: [] }])
-    @summary('test token')
-    @tag
-    public info(
-        @Ctx() ctx: Context
-    ): UserDto {
-        return PYIExecption(class extends TestController implements PYIThrows {
-            public errno!: number;
-            public errmsg!: string;
-            public async throws() {
-                return ctx.state;
-            }
-        });
-    }
-
-    @RequestMapping({
-        prefix: '/test',
-        // methods: [RequestMappingMethod.GET]
-    })
-    public async test(
-        @QueryParams() gets: any
-    ) {
-        // console.log(await this.service.findAllUsers());
-        return await 'Hello World ...';
     }
 }
