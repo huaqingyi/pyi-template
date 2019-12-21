@@ -1,6 +1,4 @@
-import { PYIBootstrap, PYIApplication, PYIOnInitApplication } from 'pyi';
-import { SwaggerInjectService, Swagger } from 'pyi-swagger';
-SwaggerInjectService.register();
+import { PYIBootstrap, PYIApplication } from 'pyi';
 
 @PYIBootstrap
 export class Application extends PYIApplication<any, any> {
