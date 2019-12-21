@@ -6,7 +6,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const pyi_swagger_1 = require("pyi-swagger");
 const pyi_1 = require("pyi");
+pyi_swagger_1.SwaggerInjectService.register();
 let Application = class Application extends pyi_1.PYIApplication {
 };
 Application = __decorate([
