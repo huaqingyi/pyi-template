@@ -1,7 +1,6 @@
 import { Component, PYIComponent, autoconnect } from 'pyi';
 import { Sequelize, ModelCtor } from 'sequelize-typescript';
 import { DataBaseConfiguration } from '../config/database.config';
-import { find } from 'lodash';
 
 @Component
 export class Database extends PYIComponent<DataBaseConfiguration> {

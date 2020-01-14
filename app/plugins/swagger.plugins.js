@@ -10,8 +10,6 @@ const pyi_1 = require("pyi");
 const pyi_swagger_1 = require("pyi-swagger");
 let SwaggerPlugins = class SwaggerPlugins extends pyi_1.PYIPlugin {
     async init() {
-        console.log('plugins swagger ...');
-        pyi_swagger_1.SwaggerInjectService.register();
         return await pyi_swagger_1.Swagger.build('/swagger.io', this.app, {
             info: {
                 description: 'PYI Swagger 测试用例',

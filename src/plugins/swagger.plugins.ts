@@ -1,5 +1,5 @@
 import { PYIPlugin, AutoPlugin, PYIPluginsAppInstall } from 'pyi';
-import { SwaggerInjectService, Swagger } from 'pyi-swagger';
+import { Swagger } from 'pyi-swagger';
 
 @AutoPlugin
 export class SwaggerPlugins extends PYIPlugin implements PYIPluginsAppInstall {
