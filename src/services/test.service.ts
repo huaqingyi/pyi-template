@@ -8,7 +8,7 @@ export class TestService extends PYIService {
     @autoconnect
     public db!: Database;
 
-    public async findAll() {
+    public findAll() {
         return this.db.table(User).findAll({ raw: true });
     }
 

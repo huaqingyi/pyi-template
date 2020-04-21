@@ -1,7 +1,21 @@
 import { Component, PYIComponent, autoconnect } from 'pyi';
 import { Sequelize, ModelCtor } from 'sequelize-typescript';
 import { DataBaseConfiguration } from '../config/database.config';
+import { find } from 'lodash';
 
+// @Component<SequelizeOptions>({
+//     dialect: 'mysql',
+//     replication: {
+//         read: [
+//             { host: '127.0.0.1', username: 'root', password: 'yihq1105', port: 3306, database: 'test' },
+//         ],
+//         write: { host: '127.0.0.1', username: 'root', password: 'yihq1105', port: 3306, database: 'test' },
+//     },
+//     pool: {
+//         max: 20,
+//         idle: 60 * 1000
+//     }
+// })
 @Component
 export class Database extends PYIComponent<DataBaseConfiguration> {
 
@@ -12,6 +26,7 @@ export class Database extends PYIComponent<DataBaseConfiguration> {
 
     constructor() {
         super();
+        console.log(this.props);
         this.database = new Sequelize(this.props);
     }
 

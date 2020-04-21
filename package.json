@@ -35,8 +35,7 @@
     "lodash": "^4.17.15",
     "mysql2": "^1.7.0",
     "node-schedule": "^1.3.2",
-    "pyi": "^1.2.9",
-    "pyi-swagger": "^1.0.3",
+    "pyi": "^1.3.1",
     "request": "^2.88.0",
     "sequelize": "^5.21.0",
     "sequelize-typescript": "^1.0.0"
