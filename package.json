@@ -57,7 +57,7 @@
     "cross-env": "^6.0.3",
     "fs-extra": "^8.1.0",
     "gulp-nodemon": "^2.4.2",
-    "gyi": "^1.0.3",
+    "gyi": "^1.0.7",
     "typescript": "^3.6.4"
   }
 }
